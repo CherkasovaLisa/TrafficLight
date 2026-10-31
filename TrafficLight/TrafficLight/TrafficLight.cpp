@@ -1,20 +1,69 @@
-﻿// TrafficLight.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+#include "TrafficLight.h"
 #include <iostream>
+#include <chrono>
+#include <iomanip>
 
-int main()
+TrafficLight::TrafficLight(const Address & addr) : address(addr) {}
+
+TrafficLightsState TrafficLight::GetCurrentState() const
 {
-    std::cout << "Hello World!\n";
+    // Фиксируем время
+    auto now = std::chrono::system_clock::now();
+    // Приводим до секунд
+    auto now_sec = std::chrono::floor<std::chrono::seconds>(now).time_since_epoch();
+    // Остаток от деления - секунды текущей минуты
+    int seconds = static_cast<int>((now_sec % 60).count());
+
+    // Позиция внутри 16-секундного цикла
+    int cycle = seconds % 16;
+
+    if (cycle >= 0 && cycle <= 5)
+        return TrafficLightsState::RED;
+    else if (cycle >= 6 && cycle <= 7)
+        return TrafficLightsState::YELLOW;
+    else if (cycle >= 8 && cycle <= 13)
+        return TrafficLightsState::GREEN;
+    else
+        return TrafficLightsState::YELLOW;
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+std::string TrafficLight::StateToString(TrafficLightsState state)
+{
+    switch (state)
+    {
+    case TrafficLightsState::RED:    return "RED";
+    case TrafficLightsState::YELLOW: return "YELLOW";
+    case TrafficLightsState::GREEN:  return "GREEN";
+    }
+    return "UNKNOWN";
+}
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+std::string TrafficLight::ColorCode(TrafficLightsState state)
+{
+    switch (state)
+    {
+    case TrafficLightsState::RED:    return "\033[1;31m";
+    case TrafficLightsState::YELLOW: return "\033[1;33m";
+    case TrafficLightsState::GREEN:  return "\033[1;32m";
+    }
+    return "\033[0m";
+}
+
+void TrafficLight::GetInfo() const
+{
+    TrafficLightsState state = GetCurrentState();
+    std::string color = ColorCode(state);
+
+    std::cout << "============================================\n";
+    std::cout << "   ИНФОРМАЦИЯ О СВЕТОФОРЕ\n";
+    std::cout << "============================================\n";
+    std::cout << " Страна:      " << address.country << "\n";
+    std::cout << " Город:       " << address.city << "\n";
+    std::cout << " Улица:       " << address.street << "\n";
+    std::cout << " Координаты:  " << std::fixed << std::setprecision(6)
+        << address.latitude << ", " << address.longitude << "\n";
+    std::cout << "--------------------------------------------\n";
+    std::cout << " Текущий свет: " << color
+        << StateToString(state) << "\033[0m\n";
+    std::cout << "============================================\n\n";
+}
