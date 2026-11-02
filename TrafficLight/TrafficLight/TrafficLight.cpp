@@ -12,7 +12,7 @@ TrafficLightsState TrafficLight::GetCurrentState() const
     // Приводим до секунд
     auto now_sec = std::chrono::floor<std::chrono::seconds>(now).time_since_epoch();
     // Остаток от деления - секунды текущей минуты
-    int seconds = static_cast<int>((now_sec % 60).count());
+    int seconds = (now_sec % 60).count();
 
     if (seconds >= 0 && seconds <= 5)
         return TrafficLightsState::RED;
