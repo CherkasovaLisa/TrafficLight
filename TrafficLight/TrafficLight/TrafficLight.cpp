@@ -12,16 +12,13 @@ TrafficLightsState TrafficLight::GetCurrentState() const
     // Приводим до секунд
     auto now_sec = std::chrono::floor<std::chrono::seconds>(now).time_since_epoch();
     // Остаток от деления - секунды текущей минуты
-    int seconds = static_cast<int>((now_sec % 60).count());
+    int seconds = (now_sec % 60).count();
 
-    // Позиция внутри 16-секундного цикла
-    int cycle = seconds % 16;
-
-    if (cycle >= 0 && cycle <= 5)
+    if (seconds >= 0 && seconds <= 5)
         return TrafficLightsState::RED;
-    else if (cycle >= 6 && cycle <= 7)
+    else if (seconds >= 6 && seconds <= 35)
         return TrafficLightsState::YELLOW;
-    else if (cycle >= 8 && cycle <= 13)
+    else if (seconds >= 36 && seconds <= 41)
         return TrafficLightsState::GREEN;
     else
         return TrafficLightsState::YELLOW;
