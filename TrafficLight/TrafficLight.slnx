@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="TrafficLight/TrafficLight.vcxproj" />
+  <Project Path="TrafficLight/TrafficLight.vcxproj" Id="bc8d1733-6bb3-4e44-b7bb-a22581a28b5e" />
 </Solution>
