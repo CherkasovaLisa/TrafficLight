@@ -2,7 +2,6 @@
 #include <chrono>
 #include <thread>
 #include "TrafficLight.h"
-#include <clocale>
 
 using namespace std::chrono_literals;
 
