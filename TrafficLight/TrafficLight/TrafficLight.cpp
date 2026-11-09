@@ -3,7 +3,7 @@
 #include <chrono>
 #include <iomanip>
 
-TrafficLight::TrafficLight(const Address & addr) : address(addr) {}
+TrafficLight::TrafficLight(const Address & addr, int off) : address(addr), offset(off) {}
 
 TrafficLightsState TrafficLight::GetCurrentState() const
 {
@@ -12,7 +12,7 @@ TrafficLightsState TrafficLight::GetCurrentState() const
     // Приводим до секунд
     auto now_sec = std::chrono::floor<std::chrono::seconds>(now).time_since_epoch();
     // Остаток от деления - секунды текущей минуты
-    int seconds = (now_sec % 60).count();
+    int seconds = ((now_sec.count() + offset) % 60);
 
     if (seconds >= 0 && seconds <= 5)
         return TrafficLightsState::RED;

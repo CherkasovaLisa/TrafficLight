@@ -33,4 +33,16 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="traffic_light_1.json">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="traffic_light_2.json">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="traffic_light_3.json">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+  </ItemGroup>
 </Project>
