@@ -3,6 +3,7 @@
 #include "Address.h"
 #include "TrafficLightsState.h"
 
+
 class TrafficLight
 {
 private:
@@ -10,7 +11,7 @@ private:
     int offset;
 
 public:
-    TrafficLight() : offset(0) {} // <--- ЭТА СТРОКА ОБЯЗАТЕЛЬНА
+    TrafficLight() : offset(0) {}
     TrafficLight(const Address& addr, int off);
 
     TrafficLightsState GetCurrentState() const;

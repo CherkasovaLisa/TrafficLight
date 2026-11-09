@@ -3,18 +3,14 @@
 #include <chrono>
 #include <iomanip>
 
-TrafficLight::TrafficLight(const Address& addr, int off) : address(addr), offset(off) {}
+TrafficLight::TrafficLight(const Address & addr, int off) : address(addr), offset(off) {}
 
 TrafficLightsState TrafficLight::GetCurrentState() const
 {
     auto now = std::chrono::system_clock::now();
     auto now_sec = std::chrono::floor<std::chrono::seconds>(now).time_since_epoch();
-
-    // Безопасно приводим время к int (long long -> int)
-    long long total_seconds = now_sec.count();
-    int seconds = static_cast<int>((total_seconds + offset) % 60);
-
-    if (seconds < 0) seconds += 60; // Защита от отрицательного времени
+    // Остаток от деления - секунды текущей минуты
+    int seconds = ((now_sec.count() + offset) % 60);
 
     if (seconds >= 0 && seconds <= 5)
         return TrafficLightsState::RED;
