@@ -7,9 +7,7 @@ TrafficLight::TrafficLight(const Address & addr, int off) : address(addr), offse
 
 TrafficLightsState TrafficLight::GetCurrentState() const
 {
-    // Фиксируем время
     auto now = std::chrono::system_clock::now();
-    // Приводим до секунд
     auto now_sec = std::chrono::floor<std::chrono::seconds>(now).time_since_epoch();
     // Остаток от деления - секунды текущей минуты
     int seconds = ((now_sec.count() + offset) % 60);

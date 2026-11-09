@@ -4,5 +4,5 @@
   "street": "Старо-Московская улица",
   "latitude": 52.968843,
   "longitude": 36.089191,
-  "time_offset": 30
+  "offset": 30
 }

@@ -4,5 +4,5 @@
   "street": "Невский проспект",
   "latitude": 59.934009,
   "longitude": 30.337589,
-  "time_offset": 15
+  "offset": 15
 }
