@@ -7,9 +7,11 @@ class TrafficLight
 {
 private:
     Address address;
+    int offset;
 
 public:
-    TrafficLight(const Address& addr);
+    TrafficLight() : offset(0) {} // <--- ЭТА СТРОКА ОБЯЗАТЕЛЬНА
+    TrafficLight(const Address& addr, int off);
 
     TrafficLightsState GetCurrentState() const;
     void GetInfo() const;

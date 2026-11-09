@@ -1,28 +1,43 @@
-﻿#include <iostream>
+﻿#include <fstream>
+#include <iostream>
 #include <chrono>
 #include <thread>
 #include "TrafficLight.h"
 
-using namespace std::chrono_literals;
+using namespace std;
+using json = nlohmann::json;
+
+TrafficLight loadLight(string filename)
+{
+    ifstream file(filename);
+    json j;
+    file >> j;
+
+    Address addr;
+    addr.country = j["country"];
+    addr.city = j["city"];
+    addr.street = j["street"];
+    addr.latitude = j["latitude"];
+    addr.longitude = j["longitude"];
+
+    TrafficLight light(addr, j["offset"]);
+    return light;
+}
 
 int main()
 {
-    std::setlocale(LC_ALL, "ru_RU.UTF-8"); // или "" для системной локали
-    
-    // Тестовый светофор: Москва, Тверская улица
-    Address addr{ "Россия", "Мытищи", "улица Борисовка", 55.921130, 37.710911 };
+    setlocale(LC_ALL, "ru_RU.UTF-8");
 
-    // Отладка — проверяем, что строки дошли
-    std::cout << "DEBUG country: [" << addr.country << "]\n";
-    std::cout << "DEBUG city:    [" << addr.city << "]\n";
-    std::cout << "DEBUG street:  [" << addr.street << "]\n";
-
-    TrafficLight light(addr);
+    TrafficLight light1 = loadLight("traffic_light_1.json");
+    TrafficLight light2 = loadLight("traffic_light_2.json");
+    TrafficLight light3 = loadLight("traffic_light_3.json");
 
     while (true)
     {
-        light.GetInfo();
-        std::this_thread::sleep_for(23000ms);
+        light1.GetInfo();
+        light2.GetInfo();
+        light3.GetInfo();
+        std::this_thread::sleep_for(chrono::seconds(23));
     }
 
     return 0;
