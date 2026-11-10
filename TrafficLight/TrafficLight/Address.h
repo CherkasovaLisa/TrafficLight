@@ -16,8 +16,8 @@ struct Address
     double latitude;       // Широта
     double longitude;      // Долгота
 };
- 
-void to_json(json& j, const Address& addr)
+
+inline void to_json(json& j, const Address& addr)
 {
     j = json
     {
@@ -29,7 +29,7 @@ void to_json(json& j, const Address& addr)
     };
 }
 
-void from_json(const json& j, Address& addr)
+inline void from_json(const json& j, Address& addr)
 {
     j.at("country").get_to(addr.country);
     j.at("city").get_to(addr.city);

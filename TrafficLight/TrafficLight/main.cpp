@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include "TrafficLight.h"
+#include <nlohmann/json.hpp>
 
 using namespace std;
 using json = nlohmann::json;
@@ -13,12 +14,7 @@ TrafficLight loadLight(string filename)
     json j;
     file >> j;
 
-    Address addr;
-    addr.country = j["country"];
-    addr.city = j["city"];
-    addr.street = j["street"];
-    addr.latitude = j["latitude"];
-    addr.longitude = j["longitude"];
+    Address addr = j.get<Address>();
 
     TrafficLight light(addr, j["offset"]);
     return light;
